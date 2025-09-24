@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:4000/user";
+const API_BASE = "https://job-portal-1-2je8.onrender.com/user";
 
 // User register
 export async function registerUser(data) {
@@ -59,7 +59,7 @@ export async function deleteUserAccount(token, id) {
 
 // User logout
 export async function userLogout(token) {
-  const response = await fetch("http://localhost:4000/user/logout", {
+  const response = await fetch("https://job-portal-1-2je8.onrender.com/user/logout", {
     method: "POST",
     headers: { token },
   });
@@ -88,7 +88,7 @@ export async function resetPassword(email, otp, newPassword) {
 
 // Upload resume
 export async function uploadResume(token, formData) {
-  return fetch("http://localhost:4000/user/upload-resume", {
+  return fetch("https://job-portal-1-2je8.onrender.com/user/upload-resume", {
     method: "POST",
     headers: { token }, // Do NOT set Content-Type!
     body: formData,
@@ -97,7 +97,7 @@ export async function uploadResume(token, formData) {
 
 // Register for a job (with resume upload)
 export async function registerJob(token, data) {
-  return fetch("http://localhost:4000/user/register-job", {
+  return fetch("https://job-portal-1-2je8.onrender.com/user/register-job", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -109,7 +109,7 @@ export async function registerJob(token, data) {
 
 // Get user's job applications
 export async function getUserApplications(token) {
-  const response = await fetch("http://localhost:4000/user/applications", {
+  const response = await fetch("https://job-portal-1-2je8.onrender.com/user/applications", {
     headers: { token },
   });
   return response.json();
@@ -117,7 +117,7 @@ export async function getUserApplications(token) {
 
 // Get all jobs (for user)
 export async function getAllJobs(token) {
-  const response = await fetch("http://localhost:4000/user/jobs", {
+  const response = await fetch("https://job-portal-1-2je8.onrender.com/user/jobs", {
     headers: { token },
   });
   return response.json();
@@ -125,7 +125,7 @@ export async function getAllJobs(token) {
 
 // Verify user email
 export async function verifyUserEmail(data) {
-  return fetch("http://localhost:4000/user/verify-email", {
+  return fetch("https://job-portal-1-2je8.onrender.com/user/verify-email", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -134,7 +134,7 @@ export async function verifyUserEmail(data) {
 
 // Verify employer email
 export async function verifyEmployerEmail(data) {
-  return fetch("http://localhost:4000/employer/verify-email", {
+  return fetch("https://job-portal-1-2je8.onrender.com/employer/verify-email", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

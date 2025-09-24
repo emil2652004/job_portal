@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:4000/employer";
+const API_BASE = "https://job-portal-1-2je8.onrender.com/employer";
 
 // Employer register
 export async function registerEmployer(data) {

@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:4000/admin";
+const API_BASE = "https://job-portal-1-2je8.onrender.com/admin";
 
 // Admin login
 export async function adminLogin(email, password) {
