@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json({ limit: '150mb' }));
 
 //PORT DECLARATION
-var port =  4000;//CORS SETUP 
+var port = process.env.PORT || 4000;//CORS SETUP 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
