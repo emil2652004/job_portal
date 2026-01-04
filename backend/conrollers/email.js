@@ -38,7 +38,10 @@ async function sendTextEmail(to, subject, text, html, attachments = []) {
                 clientSecret: process.env.client_secret,
                 refreshToken: process.env.refresh_token,
                 accessToken: accessToken
-            }
+            },
+            connectionTimeout: 10000, // 10 seconds
+            greetingTimeout: 10000,
+            socketTimeout: 10000
         });
 
         const mailOptions = {
@@ -55,8 +58,11 @@ async function sendTextEmail(to, subject, text, html, attachments = []) {
         return { success: true, info };
     } catch (error) {
         console.error('❌ Email sending failed:', error.message);
-        console.error('Full error:', error);
-        throw error;
+        console.error('Error code:', error.code);
+        
+        // Don't throw error - just log it
+        // This prevents registration from failing if email fails
+        return { success: false, error: error.message };
     }
 }
 
