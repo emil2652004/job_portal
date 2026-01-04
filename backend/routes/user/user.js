@@ -111,7 +111,15 @@ router.post('/user/register', async (req, res) => {
             { otp: otpCode, expiresat },
             { upsert: true, new: true }
         );
-        await sendTextEmail(email, 'Email Verification', `Your OTP is: ${otpCode}`);
+        
+        console.log(`Sending OTP ${otpCode} to ${email}`);
+        try {
+            await sendTextEmail(email, 'Email Verification', `Your OTP is: ${otpCode}`);
+            console.log('OTP email sent successfully');
+        } catch (emailError) {
+            console.error('Failed to send OTP email:', emailError.message);
+            // Continue anyway - user can request resend
+        }
 
         return res.status(201).json({ status: true, message: 'User registered successfully. Please verify your email with the OTP sent to your email address.' });
     } catch (error) {
