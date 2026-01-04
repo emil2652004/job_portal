@@ -47,8 +47,17 @@ export default function EmailVerification() {
             value={otp}
             onChange={e => setOtp(e.target.value)}
             required
-            style={{ width: "100%", padding: 8, marginTop: 4, color: "#000 !important", backgroundColor: "#fff !important" }}
             placeholder="Enter 6-digit OTP"
+            maxLength="6"
+            className="otp-input-field"
+            style={{ 
+              width: "100%", 
+              padding: "10px",
+              fontSize: "18px",
+              border: "2px solid #1976d2",
+              borderRadius: "8px",
+              marginTop: "4px"
+            }}
           />
         </div>
         {error && <div style={{ color: "red", marginBottom: 8 }}>{error}</div>}

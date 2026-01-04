@@ -90,6 +90,23 @@ button:focus-visible {
   box-sizing: border-box;
 }
 
+/* Force OTP input visibility */
+input[type="text"][maxlength="6"],
+input.otp-input-field {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  -webkit-text-fill-color: #000000 !important;
+  caret-color: #000000 !important;
+  color-scheme: light !important;
+}
+
+input[type="text"][maxlength="6"]:focus,
+input.otp-input-field:focus {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
 @media (max-width: 600px) {
   .login-container {
     padding: 16px 8px;

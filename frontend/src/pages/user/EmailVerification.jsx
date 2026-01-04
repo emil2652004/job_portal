@@ -27,20 +27,7 @@ export default function EmailVerification() {
   };
 
   return (
-    <>
-      <style>{`
-        .otp-input {
-          width: 100%;
-          padding: 8px;
-          margin-top: 4px;
-          color: #000 !important;
-          background-color: #fff !important;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 16px;
-        }
-      `}</style>
-      <div style={{ maxWidth: 400, margin: "2rem auto", padding: 24, background: "#fff", borderRadius: 8 }}>
+    <div style={{ maxWidth: 400, margin: "2rem auto", padding: 24, background: "#fff", borderRadius: 8 }}>
       <h2>User Email Verification</h2>
       <form onSubmit={handleVerify}>
         <div style={{ marginBottom: 16 }}>
@@ -60,9 +47,17 @@ export default function EmailVerification() {
             value={otp}
             onChange={e => setOtp(e.target.value)}
             required
-            className="otp-input"
             placeholder="Enter 6-digit OTP"
             maxLength="6"
+            className="otp-input-field"
+            style={{ 
+              width: "100%", 
+              padding: "10px",
+              fontSize: "18px",
+              border: "2px solid #1976d2",
+              borderRadius: "8px",
+              marginTop: "4px"
+            }}
           />
         </div>
         {error && <div style={{ color: "red", marginBottom: 8 }}>{error}</div>}
@@ -72,6 +67,5 @@ export default function EmailVerification() {
         </button>
       </form>
     </div>
-    </>
   );
 }
