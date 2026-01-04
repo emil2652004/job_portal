@@ -55,7 +55,7 @@ export default function UsersList() {
               <td>{u.email}</td>
               <td>
                 {u.resume ? (
-                  <a href={u.resume} target="_blank" rel="noopener noreferrer">View</a>
+                  <a href={`https://job-portal-1-2je8.onrender.com/${u.resume}`} target="_blank" rel="noopener noreferrer">View</a>
                 ) : "N/A"}
               </td>
               <td>

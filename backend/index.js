@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json({ limit: '150mb' }));
 
-app.use("/uploads", express.static('uploads'));
+app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
 //PORT DECLARATION
 var port = process.env.PORT || 4000;//CORS SETUP 
 app.use(function (req, res, next) {

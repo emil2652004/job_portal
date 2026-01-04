@@ -50,7 +50,7 @@ export default function RegisteredUsersForJobs() {
               <td>{u.jobTitle || u.title}</td>
               <td>
                 {u.resume ? (
-                  <a href={u.resume} target="_blank" rel="noopener noreferrer">View Resume</a>
+                  <a href={`https://job-portal-1-2je8.onrender.com/${u.resume}`} target="_blank" rel="noopener noreferrer">View Resume</a>
                 ) : "N/A"}
               </td>
             </tr>

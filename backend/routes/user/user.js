@@ -12,11 +12,23 @@ const Job = require('../../models/job');
 const Application = require('../../models/application'); // Assuming you have a JobApplication model
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+
+// Ensure uploads directory exists
+const uploadDir = path.join(__dirname, '../../uploads/resumes');
+console.log('Upload directory path:', uploadDir);
+if (!fs.existsSync(uploadDir)) {
+    console.log('Creating upload directory...');
+    fs.mkdirSync(uploadDir, { recursive: true });
+} else {
+    console.log('Upload directory already exists');
+}
 
 // Set storage engine
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/resumes/'); // Make sure this folder exists
+        console.log('Multer destination called, uploadDir:', uploadDir);
+        cb(null, uploadDir);
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname);
@@ -364,29 +376,33 @@ router.post('/user/register-job', isUser, async (req, res) => {
         });
         await application.save();
 
-        // Send confirmation email to the user
-        await sendTextEmail(
-            req.user.email,
-            'Job Application Confirmation',
-            `Dear ${req.user.name},\n\nYou have successfully applied for the job: ${job.title} at ${job.company}.\n\nThank you for using our portal!`,
-            // HTML content...
-            `<div style="font-family: Arial, sans-serif; background: #f6f8fa; padding: 30px;">
-                <div style="max-width: 500px; margin: auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 30px;">
-                    <h2 style="color: #2d7ff9; margin-bottom: 10px;">Job Application Confirmation</h2>
-                    <p style="font-size: 16px; color: #333;">Dear <b>${req.user.name}</b>,</p>
-                    <p style="font-size: 16px; color: #333;">
-                        You have <b>successfully applied</b> for the job:
-                        <span style="color: #2d7ff9;">${job.title}</span> at <b>${job.company}</b>.
-                    </p>
-                    <div style="margin: 24px 0; border-top: 1px solid #eee;"></div>
-                    <p style="font-size: 15px; color: #555;">
-                        Thank you for using our portal!<br>
-                        <span style="color: #2d7ff9;">Best wishes,</span><br>
-                        <b>Your Job Portal Team</b>
-                    </p>
-                </div>
-            </div>`
-        );
+        // Send confirmation email to the user (temporarily disabled for debugging)
+        try {
+            await sendTextEmail(
+                req.user.email,
+                'Job Application Confirmation',
+                `Dear ${req.user.name},\n\nYou have successfully applied for the job: ${job.title} at ${job.company}.\n\nThank you for using our portal!`,
+                // HTML content...
+                `<div style="font-family: Arial, sans-serif; background: #f6f8fa; padding: 30px;">
+                    <div style="max-width: 500px; margin: auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 30px;">
+                        <h2 style="color: #2d7ff9; margin-bottom: 10px;">Job Application Confirmation</h2>
+                        <p style="font-size: 16px; color: #333;">Dear <b>${req.user.name}</b>,</p>
+                        <p style="font-size: 16px; color: #333;">
+                            You have <b>successfully applied</b> for the job:
+                            <span style="color: #2d7ff9;">${job.title}</span> at <b>${job.company}</b>.
+                        </p>
+                        <div style="margin: 24px 0; border-top: 1px solid #eee;"></div>
+                        <p style="font-size: 15px; color: #555;">
+                            Thank you for using our portal!<br>
+                            <span style="color: #2d7ff9;">Best wishes,</span><br>
+                            <b>Your Job Portal Team</b>
+                        </p>
+                    </div>
+                </div>`
+            );
+        } catch (emailError) {
+            console.log('Email sending failed (non-critical):', emailError.message);
+        }
 
         return res.status(201).json({ status: true, message: 'Job registered successfully. Confirmation email sent.', data: application });
     } catch (error) {
@@ -429,10 +445,13 @@ router.post('/user/upload-resume', isUser, (req, res) => {
             // Optionally save resume path to user profile:
             // await login.findByIdAndUpdate(req.user._id, { resume: req.file.path });
 
+            // Return path relative to the static uploads directory
+            const relativePath = `uploads/resumes/${req.file.filename}`;
+
             return res.status(200).json({
                 status: true,
                 message: 'Resume uploaded successfully.',
-                resumePath: req.file.path
+                resumePath: relativePath
             });
         } catch (error) {
             console.error('Error uploading resume:', error);
