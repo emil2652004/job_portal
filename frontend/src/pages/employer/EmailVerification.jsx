@@ -47,7 +47,8 @@ export default function EmailVerification() {
             value={otp}
             onChange={e => setOtp(e.target.value)}
             required
-            style={{ width: "100%", padding: 8, marginTop: 4 }}
+            style={{ width: "100%", padding: 8, marginTop: 4, color: "#000", backgroundColor: "#fff" }}
+          />
           />
         </div>
         {error && <div style={{ color: "red", marginBottom: 8 }}>{error}</div>}
